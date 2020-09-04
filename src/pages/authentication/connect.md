@@ -51,7 +51,7 @@ The exact interface you'll use [is defined as](https://github.com/blockstack/con
 ```typescript
 export interface AuthOptions {
   redirectTo: string;
-  finished: (payload: FinishedData) => void;
+  onFinish: (payload: FinishedData) => void;
   sendToSignIn?: boolean;
   userSession?: UserSession;
   appDetails: {
@@ -65,7 +65,8 @@ export interface AuthOptions {
 | ------------ | ----------- | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | redirectTo   | string      |         | false    | The path in your app where users go after sign in.                                                                                                                                                                                                                                                            |
 | appDetails   | object      |         | false    | an object which includes `appName: string` and `appIcon: string`. This will speed up the process of loading your app's information during onboarding.                                                                                                                                                         |
-| finished     | function    |         | false    | A callback that can be invoked after authentication. This prevents having to do a whole page refresh in a new tab. One argument is passed to this callback, which is an object with `userSession` included. If included, then the `redirectTo` path is ignored, and the user will be logged in automatically. |
+| onFinish     | function    |         | false    | A callback that can be invoked after authentication. This prevents having to do a whole page refresh in a new tab. One argument is passed to this callback, which is an object with `userSession` included. If included, then the `redirectTo` path is ignored, and the user will be logged in automatically. |
+| finished     | function    |         | false    | **Deprecated**. Use `onFinish`.                                                                                                                                                                                                                                                                               |
 | sendToSignIn | boolean     | false   | true     | Whether the user should go straight to the 'sign in' flow (false) or be presented with the 'sign up' flow (true) instead.                                                                                                                                                                                     |
 | userSession  | UserSession |         | false    | pass a `UserSession` instance to use for authentication. If it's not passed, `@blockstack/connect` will create one for you.                                                                                                                                                                                   |
 
@@ -107,16 +108,16 @@ blockstackConnect.showBlockstackConnect(authOptions);
 
 ### In React Apps
 
-If you're using `connect` in a React app, then the best option is to use the package `@blockstack/connect-react`, utilizing React Provider and hooks in your React app.
+If you're using `connect` in a React app, then the best option is to use the package `@blockstack/connect-react`, utilizing [React Context Provider](https://reactjs.org/docs/context.html) and hooks in your React app.
 
-First, setup the `Connect` provider at the "top-level" of your app - probably next to wherever you would put a Redux provider, for example.
+First, setup the `Connect` context provider at the "top-level" of your app - probably next to wherever you would put a Redux provider, for example.
 
 ```jsx
 import { Connect } from '@blockstack/connect-react';
 
 const authOptions = {
   redirectTo: '/',
-  finished: ({ userSession }) => {
+  onFinish: ({ userSession }) => {
     console.log(userSession.loadUserData());
   },
   appDetails: {
