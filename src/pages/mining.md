@@ -125,7 +125,6 @@ Alternatively, you can run the testnet node with Docker.
 
 -> Ensure you have [Docker](https://docs.docker.com/get-docker/) installed on your machine.
 
-
 ### Generate keychain and get testnet tokens
 
 Generate a keychain:
@@ -189,7 +188,8 @@ amount = 10000000000000000
 -> Notice that this configuration differs from the one used to run the miner locally
 
 ### Run the miner
-*Note*: the ENV VARS `RUST_BACKTRACE` and `BLOCKSTACK_DEBUG` are optional
+
+_Note_: the ENV VARS `RUST_BACKTRACE` and `BLOCKSTACK_DEBUG` are optional
 
 ```bash
 docker run -d \
