@@ -88,17 +88,20 @@ Alternatively, you can run the testnet node with Docker.
 
 -> Ensure you have [Docker](https://docs.docker.com/get-docker/) installed on your machine.
 
+*Note*: the ENV VARS `RUST_BACKTRACE` and `BLOCKSTACK_DEBUG` are optional
+
 ```bash
 docker run -d \
   --name stacks_follower \
-  --rm \ # remove this to persist data across restarts
-  -e RUST_BACKTRACE="full" \ # remove to disable debug logs
-  -e BLOCKSTACK_DEBUG="1" \ # remove to disable debug logs
+  --rm \
+  -e RUST_BACKTRACE="full" \
+  -e BLOCKSTACK_DEBUG="1" \
   -p 20443:20443 \
   -p 20444:20444 \
-  blockstack/stacks-blockchain:v23.0.0.6-krypton \
+  blockstack/stacks-blockchain:latest \
 /bin/stacks-node krypton
 ```
+*Note*: the env vars `RUST_BACKTRACE` and `BLOCKSTACK_DEBUG` are optional
 
 You can review the node logs with this command:
 
